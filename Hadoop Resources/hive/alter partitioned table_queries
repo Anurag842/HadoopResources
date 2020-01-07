@@ -1,0 +1,9 @@
+drop partition
+alter table part_dept1 drop partition (deptname = 'HR');
+
+Add partition
+alter table part_dept1 add partition (deptname = 'Dev');
+
+load data local inpath'/home/jivesh/dev'into table part_dept1 partition( deptname ='Dev');
+
+msck repair table part_dept1;

@@ -1,0 +1,19 @@
+select col1,dummy_col from books lateral view explode(col2) dummy as dummy_col;
+select isnull(col2) from order;
+select substr('i am god',3);
+select concat(col1,'-',col3) from table1;
+select coalesce(col1,col2,col3) from tablename as colname;
+select explode(col2) from table1;
+select col1,col2,rank() over(order by col2 desc) from rank2;
+select col1,col2,dense_rank() over(order by col2 desc) from rank2;
+select col1,col2,row_number() over(order by col2 desc) from rank2;
+select col1,col2,row_number() over(partition by col1 order by col2 desc) from rank2;
+
+alter table tablename enable/disable no_drop;
+alter table tablename partition (deptname='hr') enable/disable no_drop;
+
+create table partitioned_table if not exists (deptno int, empname string, slary int) 
+partitioned by (deptname string) row format delimited fields terminated by',' lines terminated by'\n' stored as textfile;
+insert into table partitioned_table partition( deptname = 'HR') select col1, col3,col4 from dept where col2='HR';
+
+the commandline through which hive is executed is also called beeline.

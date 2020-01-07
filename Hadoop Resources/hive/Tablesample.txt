@@ -1,0 +1,12 @@
+select deptno, empname,sal,location from dept_buck tablesample(bucket 1 out of 2 on location);
+(divides It will collect data from buckets in a distributed fashion.
+( Eg- if you take a tablesample from a table of 4 buckets. It will divide them into two groups of two buckets each and
+then take a tablesample from the first bucket of each group so that the information is homogenous))
+
+select deptno, empname,sal,location from dept_buck tablesample(2 percent);
+
+select deptno, empname,sal,location from dept_buck tablesample(1M);
+
+select deptno, empname,sal,location from dept_buck tablesample(20 rows);
+
+You can get a few records from all the records. It is different from limit . 

@@ -1,0 +1,44 @@
+Map reduce is a programming model that scales which is used for distributed processing of large data sets.
+
+A dataset is divided into chunks of data called input splits and the process working on the chunks are called mappers.
+
+Input splits are java classes with pointers to start and end location blocks. During mapreduce execution hadoop scans and maps input splits that
+follow logical boundary rules.
+
+a mapper is a java program inbuilt in hadoop .It is executed the number of times it is split. 
+So the number of mappers are entirely dependent on input splits.
+The output of individual mappers are grouped by the key and passed to the reducer. The reducer will recieve a list of key values for that input.
+IT will then calculate the output for that list of key value pairs.
+
+To determine which is goint to be the key and which is going to be the value in the key value pair, we must notice that the reducer is going to
+get called once per symbol. Eg- if we have a list of stock prices for each stock symbol, the reducer is going to be called once per stock
+symbol so that is the key.
+
+The shuffle phase is a key part. It groups together the list of values for each key.
+
+In case we use more than one reducer, we want each key values to go into a single reducer and not have their inputs split among reducers. 
+So that is decided by a class called partition whivh decides that all values of same key go into a single reducer.
+The record for a key can come from multiple input splits and hence can come from multiple input splits. This is all sorted out in the copy phase
+
+
+In a maven mapreduce project we create separate class files for reducer, mapper and driver( brings all information to submit a mapreduce job)
+
+In the java program inputformat validates the inputs, splits up the input files into logical input splits, and provides recordreader implementation to extract
+record information(Eg- if an input file is text based and each line is a record it will use textinputformat class as input format)
+outputformat validates the uotput specification because hadoop doesnt want to overwrite any existing directory
+
+Then you specify your mapper and reducer class
+
+There are writable wrappers in hadoop for all major java primitive types. Writable is a serializable object that implements fast and simple
+serialization. Writable is used to trasnfer data in between and among mappers and reducers.Since the files are spread all over different nodes there is a need
+for serialization of the data. Writables implement serialization faster and more compact than java's serialization by removing the class name
+from the end of the byte string. This is done with the assumption that the client knows the type of object that is going to be deserialized.
+Also it is faster during processing of key value pairs because in deserialization the new instances of object are created, but in writables the 
+same object instance is reused.
+
+In our mapper class file, the value that is passed into the actual overriden map method is our actual records. So we take the vlue object ( Text value argument) and convert it to string for
+easier manipulation.
+
+
+In some cases if we dont need to reduce aything( example- if we need to print a list of values for each key instead of one value for each key we may not need the reducer)
+
