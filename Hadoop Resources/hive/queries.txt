@@ -12,8 +12,14 @@ select col1,col2,row_number() over(partition by col1 order by col2 desc) from ra
 alter table tablename enable/disable no_drop;
 alter table tablename partition (deptname='hr') enable/disable no_drop;
 
+alter table tablename enable offline;
+
 create table partitioned_table if not exists (deptno int, empname string, slary int) 
 partitioned by (deptname string) row format delimited fields terminated by',' lines terminated by'\n' stored as textfile;
 insert into table partitioned_table partition( deptname = 'HR') select col1, col3,col4 from dept where col2='HR';
 
 the commandline through which hive is executed is also called beeline.
+
+select */+ STREAMTABLE(emp_tab)*/ emp_tab.col1,emp_tab.col2,dept_tab.col2,dept_tab.col3,third_tab.col2 from emp_tab join dept_tab on ( emp_tab.col7 = dept_tab.col4 ) join third_tab on (dept_tab.col1 = third_tab.col1);
+
+select */+ MAPJOIN(emp_tab)*/ emp_tab.col1,emp_tab.col2,dept_tab.col2,dept_tab.col3,third_tab.col2 from emp_tab join dept_tab on ( emp_tab.col7 = dept_tab.col4 ) join third_tab on (dept_tab.col1 = third_tab.col1);
