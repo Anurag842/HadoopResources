@@ -23,3 +23,9 @@ the commandline through which hive is executed is also called beeline.
 select */+ STREAMTABLE(emp_tab)*/ emp_tab.col1,emp_tab.col2,dept_tab.col2,dept_tab.col3,third_tab.col2 from emp_tab join dept_tab on ( emp_tab.col7 = dept_tab.col4 ) join third_tab on (dept_tab.col1 = third_tab.col1);
 
 select */+ MAPJOIN(emp_tab)*/ emp_tab.col1,emp_tab.col2,dept_tab.col2,dept_tab.col3,third_tab.col2 from emp_tab join dept_tab on ( emp_tab.col7 = dept_tab.col4 ) join third_tab on (dept_tab.col1 = third_tab.col1);
+
+create index i1 on table temp_table(salary) as 'COMPACT' with deferred rebuild;
+alter index i1 on temp_table rebuild;
+create index i1 on table temp_table(salary) as 'BITMAP' with deferred rebuild;
+show formatted index on temp_table;
+
