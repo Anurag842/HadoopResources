@@ -1,0 +1,105 @@
+create external table overwatch (id int, name string, category string, level int) row format delimited fields terminated by ',' lines terminated by '\n' stored as textfile;
+
+load data local inpath '/home/cloudera/Downloads/overwatch' into table overwatch;
+
+overwatch.id	overwatch.name	overwatch.category	overwatch.level
+1	ana	healer	7878
+2	hanzo	damage	6372
+3	genji	damage	6593
+4	zarya	tank	3472
+5	reinhardt	tank	6383
+6	mcree	damage	6819
+7	Orisa	tank	64738
+8	reaper	healer	2532
+9	echo	damage	6372
+10	soldier76	damage	NULL
+
+
+SELECT *, LAST_VALUE(id) OVER (PARTITION BY category ORDER BY level) FROM overwatch;
+
+overwatch.id	overwatch.name	overwatch.category	overwatch.level	_wcol0
+10	soldier76	damage	NULL					10
+9	echo		damage	6372					2
+2	hanzo		damage	6372					2
+3	genji		damage	6593					3
+6	mcree		damage	6819					6
+8	reaper		healer	2532					8
+1	ana		healer	7878					1
+4	zarya		tank	3472					4
+5	reinhardt	tank	6383					5
+7	Orisa		tank	64738					7
+
+
+SELECT *, FIRST_VALUE(id) OVER (PARTITION BY category ORDER BY level) FROM overwatch;
+
+overwatch.id	overwatch.name	overwatch.category	overwatch.level	_wcol0
+10	soldier76	damage	NULL	10
+9	echo		damage	6372	10
+2	hanzo		damage	6372	10
+3	genji		damage	6593	10
+6	mcree		damage	6819	10
+8	reaper		healer	2532	8
+1	ana		healer	7878	8
+4	zarya		tank	3472	4
+5	reinhardt	tank	6383	4
+7	Orisa		tank	64738	4
+
+SELECT *, FIRST_VALUE(id) OVER (PARTITION BY category) FROM overwatch;
+
+overwatch.id	overwatch.name	overwatch.category	overwatch.level	_wcol0
+10	soldier76	damage	NULL	10
+9	echo		damage	6372	10
+6	mcree		damage	6819	10
+3	genji		damage	6593	10
+2	hanzo		damage	6372	10
+8	reaper		healer	2532	8
+1	ana		healer	7878	8
+7	Orisa		tank	64738	7
+5	reinhardt	tank	6383	7
+4	zarya		tank	3472	7
+
+SELECT *, LAST_VALUE(id) OVER (PARTITION BY category) FROM overwatch;
+
+overwatch.id	overwatch.name	overwatch.category	overwatch.level	_wcol0
+10	soldier76	damage	NULL	2
+9	echo		damage	6372	2
+6	mcree		damage	6819	2
+3	genji		damage	6593	2
+2	hanzo		damage	6372	2
+8	reaper		healer	2532	1
+1	ana		healer	7878	1
+7	Orisa		tank	64738	4
+5	reinhardt	tank	6383	4
+4	zarya		tank	3472	4
+
+SELECT *, LEAD(id) OVER (PARTITION BY category ORDER BY level) FROM overwatch;
+
+overwatch.id	overwatch.name	overwatch.category	overwatch.level	_wcol0
+10	soldier76	damage	NULL	9
+9	echo		damage	6372	2
+2	hanzo		damage	6372	3
+3	genji		damage	6593	6
+6	mcree		damage	6819	NULL
+8	reaper		healer	2532	1
+1	ana		healer	7878	NULL
+4	zarya		tank	3472	5
+5	reinhardt	tank	6383	7
+7	Orisa		tank	64738	NULL
+
+
+SELECT *, LAG(id) OVER (PARTITION BY category ORDER BY level) FROM overwatch;
+
+overwatch.id	overwatch.name	overwatch.category	overwatch.level	_wcol0
+10	soldier76	damage	NULL	NULL
+9	echo	damage	6372	10
+2	hanzo	damage	6372	9
+3	genji	damage	6593	2
+6	mcree	damage	6819	3
+8	reaper	healer	2532	NULL
+1	ana	healer	7878	8
+4	zarya	tank	3472	NULL
+5	reinhardt	tank	6383	4
+7	Orisa	tank	64738	5
+
+
+

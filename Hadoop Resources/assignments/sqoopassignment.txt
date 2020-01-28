@@ -1,0 +1,19 @@
+#using select statement in sqoop import
+
+ sqoop import \
+  --query 'SELECT a.*, b.* FROM a JOIN b on (a.id == b.id) WHERE $CONDITIONS' \
+  --split-by a.id --target-dir /user/foo/joinresults 
+
+#boundary query
+
+sqoop import --connect jdbc:mysql://localhost/mydb --username root --password cloudera --table employee --target-dir '/user/hive/warehouse/e1' -m1 --boundary-query "select min(id),max(id) from employee where id>9999";
+
+sqoop import --connect jdbc:mysql://localhost/mydb --username root --password cloudera --table employee --target-dir '/user/hive/warehouse/e1' -m1 --boundary-query "select 10000,20000";
+
+#selecting min max without boundary query 
+
+sqoop import --connect jdbc:mysql://localhost/mydb --username root --password cloudera --table employee --target-dir '/user/hive/warehouse/e1' -m1 --query 'select * from employee where id>9999 and id<20000';
+
+#fetching specific number of records (default value is 1000) which means it fetches 1000 values at a time
+
+sqoop import --connect jdbc:mysql://localhost/mydb --username root --password cloudera --table employee --target-dir '/user/hive/warehouse/e1' -m1 --fetch-size=10000;

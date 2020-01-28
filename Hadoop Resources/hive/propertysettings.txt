@@ -1,0 +1,39 @@
+set hive.cli.print.current.db=true
+
+set hive.cli.print.header=true;
+
+SET hive.exec.dynamic.partition=true;
+
+SET hive.exec.dynamic.partition.mode=nonstrict;
+
+enable transactions
+
+set hive.support.concurrency = true;
+hive>set hive.enforce.bucketing = true;
+hive>set hive.exec.dynamic.partition.mode = nonstrict;
+hive>set hive.txn.manager = org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;
+hive>set hive.compactor.initiator.on = true;
+hive>set hive.compactor.worker.threads = a positive number on at least one instance of the Thrift metastore service;
+
+We can do enable parallel execution of job stages by setting hive.exec.parallel to true .  
+<property>  
+<name>hive.exec.parallel</name>  
+<value>true</value>
+<description>Whether to execute jobs in parallel</description>
+</property>
+Also numbers of mappers assigned to execute parallel processing can also be controlled by following tag.
+<property>  
+<name>hive.exec.parallel.thread.number</name>  
+<value>8</value>
+<description>How many jobs at most can be executed in parallel</description>
+</property>
+
+setting speculative exdcution on or off
+<property>
+<name>mapred.map.tasks.speculative.execution</name>
+<value>false</value>
+</property>
+<property>
+<name>mapred.reduce.tasks.speculative.execution</name>
+<value>false</value>
+</property>

@@ -1,0 +1,24 @@
+create table transactions (t_id int(10),merchant_name varchar(20), business varchar(20), price int(10));
+
+
+ sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --columns t_id,merchant_name,business,price --table transactions --target-dir '/user/hive/warehouse/assg' --fields-terminated-by ',' --hive-import --create-hive-table --hive-table d2.df_transaction -m1;
+
+select distinct merchant_name,business from df_transaction;
+
+create table df_merchant_master (name string,description string) row format delimited fields terminated by ',' stored as textfile;
+
+load data local inpath '/home/cloudera/Downloads/data2.txt' into table df_merchant_master;
+
+select distinct * from df_merchant_master join df_transaction on (df_merchant_master.name=df_transaction.merchant_name);
+
+create table if not exists df_transactional_final (account_no int,merch_name string,merch_type string,txn_amount int) row format delimited fields terminated by ',' lines terminated by '\n' stored as textfile;
+
+insert into df_transactional_final select df_transaction.t_id,df_transaction.merchant_name,df_merchant_master.description,df_transaction.price from df_merchant_master join df_transaction on (df_merchant_master.name=df_transaction.merchant_name);
+
+insert into df_customer select account_no,sum(txn_amount),avg(txn_amount),count(txn_amount),count(DISTINCT(merch_name)),count(DISTINCT(merch_type)) from df_transactional_final group by account_no; 
+
+
+
+
+
+

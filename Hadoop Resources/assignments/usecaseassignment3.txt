@@ -1,0 +1,26 @@
+create table pokemon (id int,name string,type1 string,type2 string,total int,hp int,attack int,defense int, spatk int,spdef int,speed int)
+row format delimited fields terminated by ',' lines terminated by '\n' tblproperties("skip.header.line.count"="1");
+
+load data local inpath '/home/cloudera/Downloads/Pokemon.csv' into table pokemon;
+
+1)Find out the average HP (Hit points) of all the Pokémon, 
+
+select avg(hp) from pokemon;
+
+2)Create and insert values of existing table ‘pokemon’ into a new table ‘pokemon1’, with an additional column ‘power_rate’ to find the count of ‘powerful’ and ‘moderate’ from the table ‘pokemon1’.
+
+create table pokemon1 as select *, IF(HP>69.25875, 'powerful', IF(HP<69.25875, 'Moderate','powerless')) AS power_rate from pokemon;
+
+3)Now, we will find out the number of powerful and moderate HP Pokémons present, using the below query.
+
+select power_rate, count(1) as count from pokemon1 group by power_rate;
+
+4)Find out the top 10 Pokémons according to their HP’s using the below query.
+
+select name,hp from pokemon order by hp desc limit 10;
+
+5)Find out the top 10 Pokémons having a drastic change in their attack and sp.attack, using the below query.
+
+select name,(spatk-spdef) as difference from pokemon order by difference desc limit 10;
+
+

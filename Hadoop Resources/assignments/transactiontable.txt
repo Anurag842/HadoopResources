@@ -1,0 +1,9 @@
+create table testtable (col1 int, col2 string) row format delimited fields terminated by ',' lines terminated by '\n' stored as textfile;
+
+load data local inpath '/home/cloudera/Downloads/story' into table testtable;
+
+create table acidtable (col1 int, col2 string) clustered by (col1) into 3 buckets row format delimited fields terminated by ',' lines terminated by '\n' stored as orc TBLPROPERTIES('transactional'='TRUE');
+
+insert into acidtable select * from testtable;
+
+insert into table acidtable values (3,'b');

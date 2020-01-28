@@ -1,0 +1,12 @@
+create table employee ( emp_id int(10) primary key, emp_name varchar(20), salary int(10), department_id int(10), doj date, foreign key(department_id) references department(id));
+
+sqoop export --connect jdbc:mysql://localhost/d1 --username root --password cloudera --table employee --export-dir /user/hive/warehouse/e2/ -m1;
+
+sqoop import-all-tables --connect jdbc:mysql://localhost/d1 --username root --password cloudera
+
+sqoop import-all-tables --connect jdbc:mysql://localhost/d1 --username root --password cloudera --exclude-tables department -m1
+
+sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --table employee -target-dir employee/ --incremental append --check-column emp_id --last-value 3 -m1;​
+
+
+

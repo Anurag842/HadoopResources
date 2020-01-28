@@ -1,0 +1,31 @@
+[cloudera@quickstart assignments]$ touch data2.txt
+[cloudera@quickstart assignments]$ gedit data2.txt
+[cloudera@quickstart assignments]$hadoop fs -copyFromLocal /home/cloudera/assignments/data2.txt /user/cloudera/assignments/data2.txt;
+[cloudera@quickstart ~]$ hadoop fs -cp  assignments/data2.txt assgcopy/data2.txt;
+[cloudera@quickstart ~]$ hadoop fs -cat assignments/data2.txt;
+1	Anurag	lina:sven:slark	strength@2,agility@2,inteligence@3	Dota2,2010,7.23
+2	Mrinmoy	genji:zarya:reaper	strength@2,agility@3,intelligence@3	Overwatch,2015,2.24
+3	Nilanjan	dust:inferno	strength@3,agility@4,intelligence@2	CSGO,1996,8.19
+
+hive (d2)> create external table t1_1 (id int,name string,heroes array<string>, stats map<string,int>, 
+details struct<game:string,release:date,patch:float>) row format delimited fields terminated by '\t' 
+collection items terminated by ',' map keys terminated by '@' lines terminated by '\n' stored as orc; 
+OK
+Time taken: 0.175 seconds
+hive (d2)> create external table t1_1_dummy (id int,name string,heroes array<string>, stats map<string,int>, 
+details struct<game:string,release:date,patch:float>) row format delimited fields terminated by '\t' 
+collection items terminated by ',' map keys terminated by '@' lines terminated by '\n' stored as textfile
+ location '/user/cloudera/assignments/'; 
+OK
+Time taken: 0.079 seconds
+hive (d2)> select * from t1_1_dummy;
+OK
+1	Anurag	["lina","sven","slark"]	{"strength":2,"agility":2,"inteligence":3}	{"game":"Dota2","release":"2010-12-12","patch":7.23}
+2	Mrinmoy	["genji","zarya","reaper"]	{"strength":2,"agility":3,"intelligence":3}	{"game":"Overwatch","release":"2015-12-12","patch":2.24}
+3	Nilanjan	["dust","inferno"]	{"strength":3,"agility":4,"intelligence":2}	{"game":"CSGO","release":"1996-12-12","patch":8.19}
+
+hive (d2)> insert into table t1_1 select * from t1_1_dummy;
+
+select from_unixtime(unix_timestamp('2019-12-17','yyyy-MM-dd'), 'dd-MM-yyyy');
+OK
+17-12-2019

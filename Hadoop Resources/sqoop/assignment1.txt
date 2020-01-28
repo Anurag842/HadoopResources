@@ -1,0 +1,26 @@
+SELECT DATE_FORMAT("2017-06-15", "%Y");
+
+select date_format("2020-01-10","%d-%m-%Y");
+
+SELECT DATE_ADD("2020-01-10", INTERVAL 10 DAY);
+
+mysql> create table department (id int(10) primary key, department_name varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table employee ( emp_id int(10) primary key, emp_name varchar(20), salary int(10), department_id int(10), doj date, foreign key(department_id) references department(id));
+
+insert into department (id, department_name) values (1,'IT'),(2,'HR'),(3,'Facilities'),(4,'Transport');
+
+insert into employee values (1,'John',10000,2,'2015-08-12'),(2,'Mark',15000,1,'2018-04-15'),(3,'Stacy',12000,4,'2016-04-17');
+
+select employee.emp_name,department.id from employee join department on (Cdepartment.id=employee.department_id) where department_id = 2;
+
+[cloudera@quickstart /]$ sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --table department --target-dir '/user/hive/warehouse/d1' -m1;
+
+[cloudera@quickstart /]$ sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --table employee --target-dir '/user/hive/warehouse/e2' -m1;
+
+[cloudera@quickstart /]$ sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --table department --where "id=4" --target-dir '/user/hive/warehouse/d3' -m4;
+
+sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --columns id,department_name --table department  --target-dir '/user/hive/warehouse/d4' --fields-terminated-by "," --hive-import --create-hive-table --hive-table d1.department -m4;
+
+

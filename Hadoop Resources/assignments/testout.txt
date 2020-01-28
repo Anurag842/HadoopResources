@@ -1,0 +1,100 @@
+1,Lindsey Craft,Lenox Motors,808
+2,Juanita Weiss,Social Circle Engineering,979
+3,Jill Byrd,Donalsonville Accounting,436
+4,Leroy Avery,Cumming Software,1311
+5,Aaron McCray,Bronwood Signs,1435
+6,Kenny McGee,Thalman Gymnasium,369
+7,Annette Jarvis,Cox Software,1931
+8,Kay Elliott,Tarver Studios,759
+9,Kaitlyn Wilder,Broxton Medical supplies,561
+10,Russell Hobbs,Barwick Software,1126
+11,Eric Mercado,Baldwin Studios,23
+12,Chasity Hubbard,Riverdale Textiles,88
+13,Sierra Schneider,Montezuma Development,994
+14,Katelyn Ellis,Fort Stewart Landscaping,1206
+15,Kylie Adams,Baden Studios,464
+16,Hunter Baldwin,Clyatteville Office supplies,1594
+17,Kaylee Austin,Nelson Landscaping,1446
+18,Jonathan Shepard,Ray City Studios,1493
+19,Jan Stein,Augusta-Richmond County Medical supplies,852
+20,Alyssa William,Cuthbert Motors,93
+21,Sandra Love,Surrency Bakery,213
+22,Maria Baird,Darien Development,25
+23,Shawna Ramsey,Winder Furnishings,1614
+24,Catherine Dunlap,Cartersville Medical supplies,451
+25,Juanita Short,Cogdell Office supplies,206
+26,Ralph Logan,Saint George Development,1511
+27,Sydney Olsen,Queensland Services,371
+28,Marilyn Nguyen,Flemington Development,474
+29,Cassandra Lindsay,Edith Furnishings,801
+30,Ethan Blevins,Cleveland Motors,303
+31,Sara Kidd,Dudley Engineering,459
+32,Breanna Wolfe,Cumming Furnishings,246
+33,Billy Middleton,Tarver Textiles,987
+34,Sue Franklin,Shellman Bluff Realty,1603
+35,Rod Cleveland,Sandy Springs Bakery,1800
+36,Crystal Hart,Darien Insurance,1325
+37,Gina Lyons,Cedartown Furnishings,1117
+38,Lindsey Luna,Cusseta Landscaping,1057
+39,Matt Horn,Fargo Textiles,566
+40,Chad Farrell,Offerman Cafe,603
+41,Rachel Melton,Osterfield Motor Services,761
+42,Denise Davidson,Reidsville Engineering,209
+43,Edward Campbell,Thomaston Services,1839
+44,Gerald Wilkinson,Sunsweet Motor Services,1941
+45,Andy May,Morrow Office supplies,698
+46,Rod McLeod,Hamilton Realty,826
+47,Lawrence Cox,Attapulgus Textiles,697
+48,Patrick Adkins,Ringgold Signs,458
+49,Rod Acosta,Bloomingdale Motor Services,1279
+50,Dominic Jimenez,Garfield Realty,863
+51,Renee Nicholson,Dillard Office supplies,654
+52,Mark Bray,Pulaski Gymnasium,1893
+53,Jessie Salinas,Dudley Motors,1827
+54,Nicole Rodriquez,Offerman Services,374
+55,Andrew Fulton,Centerville Insurance,438
+56,Monica Little,Harding Services,1088
+57,Steve Obrien,Acworth Realty,1946
+58,Sherri Harding,Lumpkin Furnishings,1177
+59,Charlie Taylor,Ambrose Gymnasium,708
+60,Victor Summers,Skidaway Island Industries,658
+61,Everett Dillard,Riceboro Pro Services,507
+62,Julia Page,Haylon Manufacturing,645
+63,Tina Clarke,Dacula Landscaping,188
+64,Andrea Dean,Lithonia Motors,344
+65,Jan Anderson,Reidsville Insurance,1255
+66,Rebecca Lawrence,Franklin Gymnasium,847
+67,Amanda Knox,Roswell Manufacturing,654
+68,Stephen Medina,Griffin Travel,913
+69,Teresa Spence,Offerman Software,275
+70,Randi Cabrera,Blue Ridge Software,469
+71,Charlotte Jefferson,Axson Engineering,97
+72,Becky Poole,Crescent Engineering,1954
+73,Connie Decker,Darien Pro Services,1767
+74,Rhonda James,Nankin Medical supplies,1138
+75,Monica Snow,Pineora Realty,1278
+76,Loretta Nichols,Sandersville Textiles,90
+77,Bethany Reyes,Woodstock Medical supplies,1699
+78,Jeffrey Ewing,Hampton Cafe,1659
+79,Phillip Boyer,Axson Cafe,727
+80,Haley Stafford,Holly Springs Manufacturing,399
+81,Alex Higgins,Fort Stewart Accounting,810
+82,Charlie Bolton,Stillwell Textiles,1526
+83,Bethany Blackburn,Dasher Medical supplies,931
+84,Timothy Vasquez,Buford Software,1687
+85,Wayne Cochran,Loganville Manufacturing,1582
+86,Tasha Dyer,Eulonia Motors,154
+87,Alexandra Wilson,Athens Development,1864
+88,Sara Carey,Rochelle Development,1458
+89,Julie Duran,Abbeville Insurance,247
+90,Olivia Beach,Bronwood Software,1313
+91,Mother Humphrey,Centerville Travel,1638
+92,Tara Colon,Bronwood Development,1364
+93,Sheila Sosa,Edith Services,0
+94,Chester Washington,Thomaston Gymnasium,1178
+95,Mother Poole,Appling Development,619
+96,Toni Lyons,Bowens Mill Landscaping,129
+97,Kristen Gamble,Metter Development,319
+98,Sally Carver,Euharlee Insurance,1482
+99,Theresa Sloan,Collins Furnishings,1640
+100,Donald Moody,Bainbridge Furnishings,1728

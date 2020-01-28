@@ -1,0 +1,12 @@
+load data local inpath '/home/cloudera/Downloads/Partitioning/dept.txt' into table dept;
+
+create external table part_dept (deptno int,empname string,sal int) partitioned by (deptname string) row format delimited fields terminated by',' lines terminated by'\n'stored as textfile;
+
+insert into table part_dept partition (deptname = 'HR') select col1,col3,col4 from dept where col2 = 'HR'; 
+
+alter table part_dept set tblproperties('EXTERNAL'='FALSE');
+
+alter table part_dept drop partition (deptname = 'HR');
+
+alter table part_dept set tblproperties('EXTERNAL'='TRUE');
+

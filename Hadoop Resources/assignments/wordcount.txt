@@ -1,0 +1,14 @@
+create table word (lines string);
+load data local inpath '/home/cloudera/Downloads/story' into table word;
+
+CREATE TABLE word_counts (wordss string,count int);
+
+insert into table word_counts SELECT wordss, count(1) AS count FROM (SELECT explode(split(lines, ' ')) AS wordss FROM word) w GROUP BY wordss ORDER BY wordss;
+
+
+
+remove duplicate rows in hive;
+
+insert overwrite table tablename select distinct * from tablename;
+
+

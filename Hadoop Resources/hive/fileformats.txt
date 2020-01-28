@@ -1,0 +1,51 @@
+Hive Text file format is a default storage format. You can use the text format to interchange the data with other client application.
+ The text file format is very common most of the applications.
+ Data is stored in lines, with each line being a record. Each lines are terminated by a newline character (\n).
+Can’t split compressed files (Leads to Huge maps)
+Need to read/decompress all fields.
+
+Sequence files are Hadoop flat files which stores values in binary key-value pairs.
+The sequence files are in binary format and these files are able to split. 
+The main advantages of using sequence file is to merge two or more files into one file.
+Sequence files were originally designed for MapReduce, so the integration is smooth. 
+They encode a key and a value for each record and nothing more. 
+Records are stored in a binary format that is smaller than a text-based format would be.
+Typically if you need to store complex data in a sequence file you do so in the value part while encoding the id in the key.
+Not good for Hive ,Which has sql types. Hive always stores entire line as a value
+
+RCFile is row columnar file format. This is another form of Hive file format which offers high row level compression rates. 
+If you have requirement to perform multiple rows at a time then you can use RCFile format.
+The RCFile are very much similar to the sequence file format. This file format also stores the data as key-value pairs.
+ It first partitions rows horizontally into row splits and then it vertically partitions each row split in a columnar way.
+ RCFILE first stores the metadata of a row split, as the key part of a record, and all the data of a row split as the value part. 
+This means that RCFILE encourages column oriented storage rather than row oriented storage. 
+This column oriented storage is very useful while performing analytics.
+
+AVRO is open source project that provides data serialization and data exchange services for Hadoop.
+Apache Avro is a language-neutral data serialization system.
+ You can exchange data between Hadoop ecosystem and program written in any programming languages. 
+ Avro is not really a file format, it’s a file format plus a serialization and de-serialization framework.
+Avro depends heavily on its schema. It allows every data to be written with no prior knowledge of the schema.
+ It serializes fast and the resulting serialized data is lesser in size. 
+Avro schemas are defined with JSON that simplifies its implementation in languages with JSON libraries
+
+The ORC file stands for Optimized Row Columnar file format.
+ The ORC file format provides a highly efficient way to store data in Hive table.
+ This file system was actually designed to overcome limitations of the other Hive file formats. 
+The Use of ORC files improves performance when Hive is reading, writing, and processing data from large tables.
+An ORC file contains rows data in groups called as Stripes along with a file footer.
+ ORC format improves the performance when Hive is processing the data
+
+Parquet is a column-oriented binary file format. The parquet is highly efficient for the types of large-scale queries.
+ Parquet is especially good for queries scanning particular columns within a particular table.
+ The Parquet table uses compression Snappy, gzip; currently Snappy by default.
+instead of just storing rows of data adjacent to one another you also store column values adjacent to each other.
+ So datasets are partitioned both horizontally and vertically. 
+This is particularly useful if your data processing framework just needs access to a subset of data that is stored on disk as it
+ can access all values of a single column very quickly without reading whole records.
+ Parquet format is computationally intensive on the write side, but it reduces a lot of I/O cost to make great read performance.
+ It enjoys more freedom than ORC file in schema evolution, that it can add new columns to the end of the structure.
+ If you’re chopping and cutting up datasets regularly then these formats can be very beneficial to the speed of your application,
+
+Avro is a Row based format. If you want to retrieve the data as a whole, you can use Avro. Parquet is a Column based format.
+ If your data consists of lot of columns but you are interested in a subset of columns, you can use Parquet.

@@ -1,0 +1,22 @@
+[cloudera@quickstart assignments]$ cat data3.txt
+
+1,Hanzo,0|12
+2,Genji,1|qwww​
+
+
+
+
+hive (d2)> create external table t1_3 ( col1 int, col2 string,col3 uniontype<int,string>) row format delimited fields terminated by ',' collection items terminated by '|' lines terminated by '\n' stored as textfile;
+OK
+Time taken: 0.091 seconds
+
+hive (d2)> load data local inpath '/home/cloudera/assignments/data3.txt' into table t1_3;
+Loading data to table d2.t1_3
+Table d2.t1_3 stats: [numFiles=1, totalSize=31]
+OK
+Time taken: 0.359 seconds
+hive (d2)> select * from t1_3;
+OK
+1	Hanzo	{0:12}
+2	Genji	{1:"qwww​"}
+Time taken: 0.069 seconds, Fetched: 2 row(s)
