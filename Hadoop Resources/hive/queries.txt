@@ -29,3 +29,5 @@ alter index i1 on temp_table rebuild;
 create index i1 on table temp_table(salary) as 'BITMAP' with deferred rebuild;
 show formatted index on temp_table;
 
+
+
