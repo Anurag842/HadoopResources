@@ -1,0 +1,14 @@
+create table dummy2 ( dispatching_base string,date string,actv_vhcl int,trips int) row format delimited fields terminated by "," lines terminated by "\n" stored as textfile tblproperties ("skip.header.line.count"="1");
+
+load data local inpath '/home/cloudera/Downloads/uber' into table dummy2;
+
+create external table uberdata ( dispatching_base string,date date,actv_vhcl int,trips int) row format delimited fields terminated by "," lines terminated by "\n" stored as orc;
+
+add jar /home/cloudera/Downloads/udf2(1).jar;
+
+create temporary function f10 as 'com.hive.UDF.Dateformat';
+
+insert into uberdata select dispatching_base, cast(from_unixtime(unix_timestamp(f10(date),'MM-dd-yyyy'),'yyyy-MM-dd') as date),actv_vhcl,trips from dummy2;
+
+
+select dispatching_base, day_of_week,count(day_of_week) as frequency from(select dispatching_base,CASE date_format(date,'u')WHEN 1 THEN 'Mon' WHEN 2 THEN 'Tues' WHEN 3 THEN 'Wed' WHEN 4 THEN 'Thu' WHEN 5 THEN 'Fri' WHEN 6 THEN 'Sat' WHEN 7 THEN 'Sun' END AS day_of_week from uberdata group by dispatching_base,date order by frequency)A group by dispatching_base,day_of_week;​

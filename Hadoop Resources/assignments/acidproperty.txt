@@ -1,0 +1,23 @@
+cd /usr/lib/hive/conf
+sudo chmod -R 777 hive-site.xml;
+vi hive-site.xml;
+i to insert
+	<property>
+		<name>hive.in.test</name>
+		<value>true</value>
+	</property>
+esc
+:wq
+
+set hive.support.concurrency = true;
+hive>set hive.enforce.bucketing = true;
+hive>set hive.exec.dynamic.partition.mode = nonstrict;
+hive>set hive.txn.manager = org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;
+hive>set hive.compactor.initiator.on = true;
+hive>set hive.compactor.worker.threads = 1;
+
+CREATE TABLE college(clg_id int,clg_name string,clg_loc string) clustered by (clg_id) into 5 buckets stored as orc TBLPROPERTIES('transactional'='true')
+
+INSERT INTO table college values(1,'nec','nlr'),(2,'vit','vlr'),(3,'srm','chen'),(4,'lpu','del'),(5,'stanford','uk'),(6,'JNTUA','atp'),(7,'cambridge','us');
+
+UPDATE college set clg_id = 8 where clg_id = 7;

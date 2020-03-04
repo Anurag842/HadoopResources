@@ -1,0 +1,16 @@
+select 
+    case when cdc_codes ='Update' Then table3s
+        when cdc_codes = 'NoChange' then table2s
+        when cdc_codes = 'New' then table3s
+        when cdc_codes = 'Deletes' then table2s
+   end
+from (select 
+    case    when table2.col1=table3.col1 and table2.col2=table3.col2 then  'NoChange'
+            when table2.col1=table3.col1 and table2.col2<>table3.col2 then  'Update'
+            when table2.col1 is null then 'New'
+            when table3.col1 is null then 'Deletes'
+             end as cdc_codes,
+        concat(table2.col1,',',table2.col2) as table2s,
+        concat(table3.col1,',',table3.col2) as table3s
+    from table2
+    full outer join table3 on table2.col1=table3.col1) as b1

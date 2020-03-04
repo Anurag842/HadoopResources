@@ -1,0 +1,14 @@
+create table ecom(country varchar(10), name varchar(20), orderid int, itemid int, returned int,custgroup int, itemprice float);
+
+load data infile '/home/cloudera/Downloads/customerdata.csv' into table ecom fields terminated by ',' enclosed by '"' lines terminated by '\n';
+
+sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --columns country,name,orderid,itemid,returned,custgroup,itemprice --table ecom  --target-dir '/home/cloudera/Documents/ecom' --fields-terminated-by "," --split-by orderid --hive-import --create-hive-table --hive-table d3.ecom -m4;
+
+INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/ecom1' select * from ecom where custgroup=400;
+
+INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/ecom2' select country,count(name) as customers,sum(itemprice) as total from ecom group by Country;
+
+INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/ecom3' select  count(name) from ecom where Country="IN" and returned=1;
+
+INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/ecom4' select * from ecom where returned=0;
+

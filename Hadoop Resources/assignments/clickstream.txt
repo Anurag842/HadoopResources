@@ -1,0 +1,24 @@
+add jar /home/cloudera/Downloads/json-serde-1.3.7-jar-with-dependencies.jar;
+
+set mapred.output.compression.codec = org.apache.hadoop.io.compress.SnappyCodec;
+set mapred.output.compression.type = BLOCK;
+
+create external table dummy1 (a string,c string,nk int,tz string,gr string,g string, h string, l string,al string, hh string, r string, u string, t bigint, hc bigint,cy string,ll array<float>) ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'; 
+
+load data local inpath '/home/cloudera/Downloads/click stream data.txt' into table dummy1;
+
+set hive.enforce.bucketing = true;
+
+create external table clickstreamdata (a string,c string,nk int,tz string,gr string,g string, h string, l string,al string, hh string, r string, u string, t bigint, hc bigint,cy string,ll array<float>) clustered by (u) into 32 buckets stored as orc TBLPROPERTIES( 'orc.compress'='SNAPPY', 'orc.bloom.filter.columns'='c') ;
+
+insert into clickstreamdata select * from dummy1;
+
+
+1> INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/clickstream1.txt' select count(u) as clicks,u as site from clickstreamdata group by u order by clicks desc limit 10;
+
+hadoop fs -text /home/cloudera/Documents/clickstream1.txt/000000_0.snappy
+
+
+
+2> INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/clickstream2' select * from (select *, rank() over(partition by k.c order by k.cnt desc) as r from(select u,c,count(u) as cnt from clickstreamdata where c is not null group by u,c ) as k)B where r<=10;
+hadoop fs -text /home/cloudera/Documents/clickstream2/000000_0.snappy

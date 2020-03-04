@@ -1,0 +1,15 @@
+create table titanic ( PassengerId int,Survived int, Pclass int, Name varchar(20), Sex varchar(20), Age int, SibSp int, Parch int, Ticket varchar(20), Fare float, Cabin varchar(20), Embarked varchar(20));
+
+load data infile '/home/cloudera/Downloads/TitanicData.txt' into table titanic fields terminated by ',' enclosed by '"' lines terminated by '\n';
+
+sqoop import --connect jdbc:mysql://localhost/d1 --username root --password cloudera --columns PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked --table titanic  --target-dir '/home/cloudera/Documents/titanic' --fields-terminated-by "," --split-by PassengerId --hive-import --create-hive-table --hive-table d3.titanic -m4;
+
+INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/titanic1' select avg(age),sex from titanic where survived = 1  group by sex;
+
+hadoop fs -text /home/cloudera/Documents/titanic1/000000_0.snappy;
+
+
+INSERT OVERWRITE DIRECTORY '/home/cloudera/Documents/titanic2' select pclass,sex,count(survived) as deathcount from titanic where survived=1 group by pclass,sex; 
+
+hadoop fs -text /home/cloudera/Documents/titanic2/000000_0.snappy;
+

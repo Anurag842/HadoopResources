@@ -31,3 +31,17 @@ show formatted index on temp_table;
 
 
 
+UDF
+add jar /jarpath;
+create temporary function f1 as package.classname
+
+
+
+create table t1 (col1 string, col2 int) row format delimited fields termnated by ',' lines terminated by '\n' stored as textfile tblproperties('skip.header/footer.line.count'='2)
+
+create table t1 (col1 string, col2 int) row format delimited fields termnated by ',' lines terminated by '\n' stored as textfile tblproperties('immutable'='true');
+#tables are mutable by default and values can be inserted from another table. If a table is immutable only insert overwrite works on it.
+
+
+create table t1 (col1 string, col2 int) row format delimited fields termnated by ',' lines terminated by '\n' stored as textfile tblproperties("serialization.null.format"="");
+#table can now store null when given an empty space
