@@ -1,0 +1,17 @@
+SELECT <columns_name>, <aggregate>(column_name) OVER (<windowing specification>) FROM <table_name>;
+
+SELECT id, name, designation, department, COUNT(id) OVER (PARTITION BY department ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) FROM window_demo;
+
+SELECT id, name, designation, department, salary, COUNT(id) OVER (partition by department ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) FROM window_demo;
+
+SELECT id, name, designation, department,salary, COUNT(id) OVER (PARTITION BY department ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) FROM window_demo;
+
+SELECT id, name, designation, department,salary, COUNT(id) OVER (PARTITION BY department DESC ROWS BETWEEN CURRENT ROW AND 3 FOLLOWING) FROM window_demo;
+
+SELECT id, first_name, designation, department,salary, LEAD(id) OVER (PARTITION BY department ORDER BY salary) FROM window_demo;
+
+SELECT id, first_name, designation, department,salary, Lag(id) OVER (PARTITION BY department ORDER BY salary) FROM window_demo;
+
+SELECT id, first_name, designation, department,salary, first_value(id) OVER (PARTITION BY department ORDER BY salary) FROM window_demo;
+
+SELECT id, first_name, designation, department,salary, Last_value(id) OVER (PARTITION BY department ORDER BY salary) FROM window_demo;

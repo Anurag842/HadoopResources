@@ -1,0 +1,78 @@
+create table olympic_avro
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
+STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
+tblproperties ('avro.schema.literal'='{
+"name": "my_record",
+"type": "record",
+"fields": [
+{"name":"athelete", "type":"string"},
+{"name":"age", "type":"int"},
+{"name":"country", "type":"string"},
+{"name":"year", "type":"string"},
+{"name":"closing", "type":"string"},
+{"name":"sport", "type":"string"},
+{"name":"gold", "type":"int"},
+{"name":"silver", "type":"int"},
+{"name":"bronze", "type":"int"},
+{"name":"total", "type":"int"}
+]}');
+
+create table olympic(athelete STRING,age INT,country STRING,year STRING,closing STRING,sport STRING,gold INT,silver INT,bronze INT,total INT) row format delimited fields terminated by '\t' stored as textfile;
+
+load data local inpath '/home/cloudera/Downloads/olympic_data.csv' into table olympic;
+
+insert overwrite table olympic_avro select * from olympic limit 20; ( since avro cannot handle null values by default so we will load other data later)
+
+create table olympic_avro1
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
+STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
+tblproperties ('avro.schema.literal'='{
+"namespace":"com.example.avro",
+"name": "my_record",
+"type": "record",
+"fields": [
+{"name":"athelete", "type":["string","null"],"default":null},
+{"name":"age", "type":["int","null"],"default":0},
+{"name":"country", "type":["string","null"],"default":null},
+{"name":"year", "type":["string","null"],"default":null},
+{"name":"closing", "type":["string","null"],"default":null},
+{"name":"sport", "type":["string","null"],"default":null},
+{"name":"gold", "type":["int","null"],"default":0},
+{"name":"silver", "type":["int","null"],"default":0},
+{"name":"bronze", "type":["int","null"],"default":0},
+{"name":"total", "type":["int","null"],"default":0}
+]}');
+
+insert overwrite table olympic_avro1 select * from olympic;
+
+we can now download the created avro file format from hdfs and can also subsequently load it into avro tables directly
+
+create table olympic_avro2
+    > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
+    > STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
+    > OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
+    > tblproperties ('avro.schema.literal'='{
+    > "name": "my_record",
+    > "type": "record",
+    > "fields": [
+    > {"name":"athelete", "type":"string"},
+    > {"name":"age", "type":"int"},
+    > {"name":"country", "type":"string"},
+    > {"name":"year", "type":"string"},
+    > {"name":"closing", "type":"string"},
+    > {"name":"sport", "type":"string"},
+    > {"name":"gold", "type":"int"},
+    > {"name":"silver", "type":"int"},
+    > {"name":"bronze", "type":"int"},
+    > {"name":"total", "type":"int"}
+    > ]}');
+
+
+
+load data local inpath '/home/cloudera/Downloads/avrodata.avro' into table olympic_avro2;
+
+
+
+

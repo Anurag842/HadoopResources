@@ -1,0 +1,10 @@
+create table pstock(date string, open string, high string, low string, close string, volume bigint) stored as parquet;
+
+create table stock(date string, open string, high string, low string, close string, volume bigint) row format delimited fields terminated by '\t' stored as textfile;
+
+load data local inpath '/home/cloudera/Downloads/stock.txt' into table stock;
+
+insert into table pstock select * from stock;
+
+
+
